@@ -12,6 +12,7 @@ Kp = 1.2 * (T / L);
 Ti = 2 * L;
 Td = 0.5 * L;
 
+fprintf('PID parameters (ZN1 tuning):\n');
 fprintf('PID Parameters:\n');
 fprintf('Kp = %.4f\n', Kp);
 fprintf('Ti = %.4f (s)\n', Ti);
