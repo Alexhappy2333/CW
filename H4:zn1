@@ -1,0 +1,34 @@
+s = tf('s');
+G = (0.5*s + 1) / ((s + 1)^3 * (0.1*s + 1));
+
+T = 3.418;    
+A = 1;        
+L = 0.517;    
+
+R = A / T;
+fprintf('R = A/T = %.4f\n', R);
+
+Kp = 1.2 * (T / L);
+Ti = 2 * L;
+Td = 0.5 * L;
+
+fprintf('PID Parameters:\n');
+fprintf('Kp = %.4f\n', Kp);
+fprintf('Ti = %.4f (s)\n', Ti);
+fprintf('Td = %.4f (s)\n', Td);
+
+C = pid(Kp, Kp/Ti, Kp*Td);
+
+CL = feedback(C*G, 1);
+
+t = 0:0.01:30;  
+[y_cl, t_cl] = step(CL, t);
+
+figure;
+plot(t_cl, y_cl, 'b-', 'LineWidth', 2); hold on;
+plot(t_cl, ones(size(t_cl)), 'r--', 'LineWidth', 1.5);
+xlabel('Time (seconds)');
+ylabel('Response');
+title('Closed-loop Step Response (Ziegler-Nichols First Method)');
+legend('Closed-loop response', 'Reference');
+grid on;
